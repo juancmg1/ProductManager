@@ -1,7 +1,7 @@
 import express from 'express'
-import { ProductManager } from './config/ProductManager'
+import { ProductManager } from "./config/ProductManager.js";
 const app = express()
-const PORT = 8000
+const PORT = 8082
 const productManager = new ProductManager('./products.json')
 
 app.get('/', (req, res) => {
