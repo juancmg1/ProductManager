@@ -1,3 +1,29 @@
-[{"title":"Yerba mate","description":"Del norte pa","price":3000,"stock":22,"code":"Y243","thumbnail":[],"id":"973c05f0913838c3c983"},{"title":"Azucar","description":"La sonrisa","price":400,"stock":14,"code":"A433","thumbnail":[],"id":"ee2d3464594295bac9d3"},{"title":"salsa","description":"Muy rico","price":1200,"stock":20,"code":"A123","thumbnail":[],"id":"86a89dd0cc54618050fa"}
-
+[
+    {
+        "title": "Lentejas",
+        "description": "Sanas",
+        "price": 1500,
+        "stock": 25,
+        "code": "L123",
+        "thumbnail": [],
+        "id": "1747ea8e4b47e46934ba"
+    },
+    {
+        "title": "Yerba mate",
+        "description": "Del norte pa",
+        "price": 3000,
+        "stock": 22,
+        "code": "Y243",
+        "thumbnail": [],
+        "id": "e8d4db4bdedf152c83c2"
+    },
+    {
+        "title": "Azucar",
+        "description": "La sonrisa",
+        "price": 400,
+        "stock": 14,
+        "code": "A433",
+        "thumbnail": [],
+        "id": "ed278bf2d3ebbc8b5af6"
+    }
 ]
