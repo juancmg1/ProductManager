@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ProductManager } from '../config/ProductManager.js'
 
-const productManager = new ProductManager('../data/products.jso')
+const productManager = new ProductManager('./src/data/products.json')
 const productsRouter = Router()
 
 productsRouter.get('/', async (req, res) => {
@@ -12,10 +12,16 @@ productsRouter.get('/', async (req, res) => {
         if (!limite)
             limite = prods.length
         const prodsLimit = prods.slice(0, limite)
-        res.status(200).send(prodsLimit)
+        res.status(200).render('templates/home', {
+            mostrarProductos: true,
+            productos: prodsLimit,
+            css: 'product.css'
+        })
 
     } catch (error) {
-        res.status(500).send(`Error interno del servidor al consultar productos: ${error}`)
+        res.status(500).render('templates/error', {
+            error: error,
+        })
     }
 })
 

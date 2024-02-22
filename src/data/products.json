@@ -6,7 +6,8 @@
         "stock": 25,
         "code": "L123",
         "thumbnail": [],
-        "id": "1747ea8e4b47e46934ba"
+        "id": "1747ea8e4b47e46934ba",
+        "img": "https://imgs.elpais.com.uy/dims4/default/f4b5717/2147483647/strip/true/crop/1232x847+24+0/resize/1440x990!/quality/90/?url=https%3A%2F%2Fel-pais-uruguay-production-web.s3.us-east-1.amazonaws.com%2Fbrightspot%2Fuploads%2F2021%2F02%2F03%2F601a7a1a67b6c.jpeg"
     },
     {
         "title": "Yerba mate",
@@ -15,7 +16,9 @@
         "stock": 22,
         "code": "Y243",
         "thumbnail": [],
-        "id": "e8d4db4bdedf152c83c2"
+        "id": "e8d4db4bdedf152c83c2",
+        "img": "https://http2.mlstatic.com/D_NQ_NP_759062-MLA51482671385_092022-O.webp"
+
     },
     {
         "title": "Azucar",
@@ -24,6 +27,7 @@
         "stock": 14,
         "code": "A433",
         "thumbnail": [],
-        "id": "ed278bf2d3ebbc8b5af6"
+        "id": "ed278bf2d3ebbc8b5af6",
+        "img": "https://d1on8qs0xdu5jz.cloudfront.net/webapp/images/productos/b/0000000000/1.jpg"
     }
 ]
