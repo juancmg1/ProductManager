@@ -14,7 +14,7 @@ import userRouter from './routes/userRoutes.js'
 const app = express()
 const PORT = 8082
 
-mongoose.connect("mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://juancmg002:@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => console.log("DB is connected"))
 .catch(e => console.log(e))
 
