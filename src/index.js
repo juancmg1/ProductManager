@@ -1,15 +1,15 @@
 import express from 'express'
 import cartRouter from './routes/cartRouter.js'
-import productsRouter from './routes/productsRoutes.js'
+import productsRouter from './routes/productsRouter.js'
 import upload from './config/multer.js'
 import { __dirname } from './path.js'
 import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
-import chatRouter from './routes/chatRoutes.js'
+import chatRouter from './routes/chatRouter.js'
 import mongoose from 'mongoose'
 import messageModel from './models/messages.js'
-import userRouter from './routes/userRoutes.js'
-
+import userRouter from './routes/userRouter.js'
+import productModel from './models/product.js'
 
 const app = express()
 const PORT = 8082
@@ -62,3 +62,7 @@ app.post('/upload', upload.single('product'), (req, res) => {
         res.status(500).send("Error al cargar imagen")
     }
 })
+
+const resultado = await productModel.paginate({ status: true }, { limit: 10, page: 1, sort: ({ price: 'desc' }) })
+console.log(resultado)
+

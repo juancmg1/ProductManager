@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose'
+import paginate from 'mongoose-paginate-v2';
 
 const productSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     description: {
         type: String,
@@ -12,6 +14,14 @@ const productSchema = new Schema({
     stock: {
         type: Number,
         required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: Boolean,
+        default: true
     },
     code: {
         type: String,
@@ -26,6 +36,8 @@ const productSchema = new Schema({
         default: []
     }
 })
+
+productSchema.plugin(paginate)
 
 const productModel = model("products", productSchema)
 
