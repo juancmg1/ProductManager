@@ -44,4 +44,26 @@ cartRouter.post('/:cid/:pid', async (req, res) => {
     }
 })
 
+cartRouter.delete('/:cid', async (req, res) => {
+    try {
+        const idCart = req.params.cid
+        const mensaje = await cartModel.findByIdAndDelete(idCart)
+        res.status(200).send(mensaje)
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al eliminar carrito: ${error}`)
+    }
+})
+
+cartRouter.delete('/:cid/:pid', async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+        const cart = await cartModel.findById(cartId);
+        const mensaje = await cartModel.findByIdAndUpdate(cartId, { $pull: { products: { _id: productId } } });
+        res.status(200).send(mensaje)
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al eliminar carrito: ${error}`)
+    }
+})
+
 export default cartRouter

@@ -62,10 +62,9 @@ app.post('/upload', upload.single('product'), (req, res) => {
         res.status(500).send("Error al cargar imagen")
     }
 })
-<<<<<<< HEAD
+
 
 const resultado = await productModel.paginate({ status: true }, { limit: 10, page: 1, sort: ({ price: 'desc' }) })
 console.log(resultado)
 
-=======
->>>>>>> db37756f4fb4feeae184255912898d4669c15177
+
