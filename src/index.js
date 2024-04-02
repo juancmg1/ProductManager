@@ -21,7 +21,7 @@ import initializePassport from './config/passport/strategies/passport.js'
 const app = express()
 const PORT = 8082
 
-mongoose.connect("mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://juancmg002:@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => console.log("DB is connected"))
 .catch(e => console.log(e))
 
@@ -39,7 +39,7 @@ app.use(session({
     secret: "coderSecret",
     resave: true,
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        mongoUrl: "mongodb+srv://juancmg002:@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
         ttl: 60 * 60
     }),
     saveUninitialized: true
