@@ -14,12 +14,14 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import sessionRouter from './routes/sessionRouter.js'
+import passport from 'passport'
+import initializePassport from './config/passport/strategies/passport.js'
 
 
 const app = express()
 const PORT = 8082
 
-mongoose.connect("mongodb+srv://juancmg002:@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => console.log("DB is connected"))
 .catch(e => console.log(e))
 
@@ -37,7 +39,7 @@ app.use(session({
     secret: "coderSecret",
     resave: true,
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://juancmg002:@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        mongoUrl: "mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
         ttl: 60 * 60
     }),
     saveUninitialized: true
@@ -47,6 +49,10 @@ app.use(cookieParser("claveSecreta"))
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', __dirname + '/views')
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get('/setCookie', (req, res) => {
     res.cookie('CookieCookie', 'Esto es una cookie :)', { maxAge: 3000000, signed: true }).send("Cookie creada") // max age es en mseg 
@@ -101,6 +107,9 @@ io.on('connection', (socket) => {
 })
 
 //Routes
+app.get('/', (req, res) => {
+    res.status(200).send("Bienvenido/a!")
+})
 app.use('/public', express.static(__dirname + '/public'))
 app.use('/api/products', productsRouter, express.static(__dirname + '/public'))
 app.use('/api/cart', cartRouter)
