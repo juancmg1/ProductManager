@@ -4,12 +4,16 @@ import crypto from 'crypto'
 import GithubStrategy from 'passport-github2'
 import { userModel } from '../../../models/user.js'
 import { createHash, validatePassword } from '../../../utils/bcrypt.js'
+import { strategyJWT } from './jwtStrategy.js'
 
 //Passport trabaje con uno o mas middlewares
 const localStrategy = local.Strategy
 
 const initializePassport = () => {
     //Definir en que rutas se aplican mis estrategias
+
+
+
 
     passport.use('register', new localStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
@@ -49,10 +53,10 @@ const initializePassport = () => {
             return done(e)
         }
     }))
-
+    
     passport.use('github', new GithubStrategy({
-        clientID: "",
-        clientSecret: "",
+        clientID: "51063736660bd9540e17",
+        clientSecret: "94d5f79f58c128e1d91e7f51f76e634acfcc16a7",
         callbackURL: "http://localhost:8082/api/session/githubSession"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
@@ -70,9 +74,8 @@ const initializePassport = () => {
             return done(error)
         }
     }))
-
-
-
+    
+    passport.use('jwt', strategyJWT)
 
 }
 export default initializePassport
