@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import express from 'express'
 import cartRouter from './routes/cartRouter.js'
 import productsRouter from './routes/productsRouter.js'
@@ -16,12 +17,14 @@ import MongoStore from 'connect-mongo'
 import sessionRouter from './routes/sessionRouter.js'
 import passport from 'passport'
 import initializePassport from './config/passport/strategies/passport.js'
+import varenv from './dotenv.js'
 
 
 const app = express()
 const PORT = 8082
+dotenv.config()
 
-mongoose.connect("mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(varenv.mongo_url)
 .then(() => console.log("DB is connected"))
 .catch(e => console.log(e))
 
@@ -36,16 +39,16 @@ const io = new Server(server)
 app.use(express.json())
 
 app.use(session({
-    secret: "coderSecret",
+    secret: varenv.session_secret,
     resave: true,
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://juancmg002:juan@cluster0.azzipqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        mongoUrl: varenv.mongo_url,
         ttl: 60 * 60
     }),
     saveUninitialized: true
 }))
 
-app.use(cookieParser("claveSecreta"))
+app.use(cookieParser(varenv.cookies_secret))
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', __dirname + '/views')
