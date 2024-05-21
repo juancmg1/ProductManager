@@ -18,6 +18,7 @@ import sessionRouter from './routes/sessionRouter.js'
 import passport from 'passport'
 import initializePassport from './config/passport/strategies/passport.js'
 import varenv from './dotenv.js'
+import mockingRouter from './routes/mockingRouter.js'
 
 
 const app = express()
@@ -119,7 +120,7 @@ app.use('/api/cart', cartRouter)
 app.use('/api/chat', chatRouter, express.static(__dirname + '/public'))
 app.use('/api/users', userRouter)
 app.use('/api/session', sessionRouter)
-
+app.use('/api/mockingproducts', mockingRouter)
 app.post('/upload', upload.single('product'), (req, res) => {
     try {
         console.log(req.file)
