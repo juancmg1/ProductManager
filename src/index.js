@@ -19,6 +19,7 @@ import passport from 'passport'
 import initializePassport from './config/passport/strategies/passport.js'
 import varenv from './dotenv.js'
 import mockingRouter from './routes/mockingRouter.js'
+import { addLogger } from './utils/logger.js'
 
 
 const app = express()
@@ -38,6 +39,7 @@ const io = new Server(server)
 
 //Middlewares
 app.use(express.json())
+app.use(addLogger)
 
 app.use(session({
     secret: varenv.session_secret,
@@ -126,6 +128,7 @@ app.post('/upload', upload.single('product'), (req, res) => {
         console.log(req.file)
         res.status(200).send("Imagen cargada correctamente")
     } catch (e) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send("Error al cargar imagen")
     }
 })

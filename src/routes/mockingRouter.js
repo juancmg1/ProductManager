@@ -20,6 +20,7 @@ mockingRouter.post('/', async (req, res) => {
             //res.status(201).send(products); // Enviar todos los productos creados en una sola respuesta
             //res.end();
         } catch (error) {
+            req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
             res.status(500).send(`Error interno del servidor al crear productos: ${error}`);
         }
     }

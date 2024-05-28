@@ -14,6 +14,7 @@ export const login = async (req, res) => {
         res.status(200).send("Usuario logueado correctamente")
 
     } catch (e) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send("Error al loguear usuario")
     }
 }
@@ -27,6 +28,7 @@ export const register = async (req, res) => {
         res.status(200).send("Usuario creado correctamente")
 
     } catch (e) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send("Error al registrar usuario")
     }
 
@@ -35,6 +37,7 @@ export const register = async (req, res) => {
 export const logout = async (req, res) => {
     req.session.destroy(function (e) {
         if (e) {
+            req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
             console.log(e)
         } else {
             res.status(200).redirect("/")

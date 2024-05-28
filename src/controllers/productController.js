@@ -23,6 +23,7 @@ export const getProducts = async (req, res) => {
         res.status(200).send(prods)
 
     } catch (error) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).render('templates/error', {
             error: error,
         });
@@ -39,6 +40,7 @@ export const getProduct = async (req, res) => {
         else
             res.status(404).send("Producto no existe")
     } catch (error) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send(`Error interno del servidor al consultar producto: ${error}`)
     }
 }
@@ -57,6 +59,7 @@ export const createProduct = async (req, res) => {
 
 
     } catch (error) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send(`Error interno del servidor al crear producto: ${error}`)
     }
 }
@@ -74,6 +77,7 @@ export const updateProduct = async (req, res) => {
 
 
     } catch (error) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send(`Error interno del servidor al actualizar producto: ${error}`)
     }
 
@@ -91,6 +95,7 @@ export const deleteProduct = async (req, res) => {
         }
 
     } catch (error) {
+        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
         res.status(500).send(`Error interno del servidor al eliminar producto: ${error}`)
     }
 
