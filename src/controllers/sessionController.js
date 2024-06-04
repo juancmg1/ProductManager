@@ -1,5 +1,8 @@
 import passport from "passport";
-
+import {sendEmailChangePassword} from '../utils/nodemailer.js'
+import jwt from 'jsonwebtoken'
+import { userModel } from "../models/user.js";
+import { validatePassword } from "../utils/bcrypt.js";
 export const login = async (req, res) => {
     try {
         if (!req.user) {
@@ -63,4 +66,49 @@ export const testJWT = async (req, res) => {
         res.status(403).send("Usuario no autorizado")
     else
         res.status(200).send(req.user)
+}
+
+export const createNewPassword = async (req, res) => {
+    const {token} = req.params
+    const {newPassword} = req.body
+    
+    try {
+        const validateToken = jwt.verify(token.substr(6), "coder");
+        const user = await userModel.findOne({ email: validateToken.userEmail });
+        if (user) {
+            console.log(newPassword)
+            console.log(user)
+            if (!validatePassword(newPassword, user.password)) {
+                const hashPassword = createHash(newPassword)
+                user.password = hashPassword
+                const resultado = await userModel.findByIdAndUpdate(user._id, user)
+                res.status(200).send("contraseña  modificada")
+            }else{
+                res.status(400).send(" las contraseñas son iguales ")
+            }
+        }else{
+            res.status(404).send(" usuario no existe ")
+        }
+    } catch (error) {
+        res.status(500).send(error)
+    }
+
+}
+export const changePassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await userModel.findOne({ email: email });
+
+        if (user) {
+            const token = jwt.sign({ userEmail: email }, "coder", { expiresIn: '1h' });
+            const resetLink = `http://localhost:8082/api/session/reset-password?token=${token}`;
+            sendEmailChangePassword(email, resetLink);
+            res.status(200).send('Email enviado correctamente');
+        } else {
+            res.status(400).send('Usuario no encontrado');
+        }
+    } catch (error) {
+        console.error(error); // Log the error for debugging purposes
+        res.status(500).send('Error interno del servidor');
+    }
 }
