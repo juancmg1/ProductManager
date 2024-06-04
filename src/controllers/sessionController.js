@@ -2,7 +2,7 @@ import passport from "passport";
 import {sendEmailChangePassword} from '../utils/nodemailer.js'
 import jwt from 'jsonwebtoken'
 import { userModel } from "../models/user.js";
-import { validatePassword } from "../utils/bcrypt.js";
+import { validatePassword , createHash } from "../utils/bcrypt.js";
 export const login = async (req, res) => {
     try {
         if (!req.user) {
@@ -71,9 +71,10 @@ export const testJWT = async (req, res) => {
 export const createNewPassword = async (req, res) => {
     const {token} = req.params
     const {newPassword} = req.body
+   
     
     try {
-        const validateToken = jwt.verify(token.substr(6), "coder");
+        const validateToken = jwt.verify(token.substr(6,), "coder");
         const user = await userModel.findOne({ email: validateToken.userEmail });
         if (user) {
             console.log(newPassword)
@@ -83,6 +84,7 @@ export const createNewPassword = async (req, res) => {
                 user.password = hashPassword
                 const resultado = await userModel.findByIdAndUpdate(user._id, user)
                 res.status(200).send("contraseña  modificada")
+                console.log(resultado)
             }else{
                 res.status(400).send(" las contraseñas son iguales ")
             }
@@ -91,6 +93,7 @@ export const createNewPassword = async (req, res) => {
         }
     } catch (error) {
         res.status(500).send(error)
+        console.log(error)
     }
 
 }
