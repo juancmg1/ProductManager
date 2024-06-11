@@ -1,0 +1,56 @@
+paths:
+  /api/cart/:
+    post:
+      summary: Crear carrito
+      tags:
+        - Cart
+      responses:
+        '200':
+          description: Carrito creado correctamente
+        '500':
+          description: Error al crear un carrito
+    
+  /api/cart/{id}:
+    get:
+      summary: Buscar un carrito por su ID
+      tags:
+        - Cart
+      responses:
+        '200':
+          description: Carrito encontrado correctamente
+        '404':
+          description: Carrito no encontrado
+  
+  /api/cart/{cartId}//{productId}:
+    post:
+      summary: Agregar un producto al carrito
+      tags:
+        - Cart
+        - Products
+      responses:
+        '200':
+          description: Producto agregado correctamente al carrito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        '404':
+          description: Error al agregar producto al carrito
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        id_prod:
+          type: string
+          description: Id autogenerado por MongoDB
+        quantity:
+          type: number
+    
+      example:
+          id_prod: 664bf735ae501e26c4d4c728
+          quantity: 5
+       

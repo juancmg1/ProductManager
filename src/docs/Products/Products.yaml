@@ -1,0 +1,95 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos de mi API
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Productos obtenidos correctamente
+        '500':
+          description: Error al obtener los productos
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Producto creado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Error al crear el producto
+  /api/products/{id}:
+    get:
+      summary: Buscar un producto por su ID
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Producto encontrado correctamente
+        '404':
+          description: Producto no encontrado
+    put:
+      summary: Actualizar un producto por su ID
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Producto actualizado correctamente
+        '404':
+          description: Producto no encontrado
+    delete:
+      summary: Eliminar un producto por su ID
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Producto eliminado correctamente
+        '404':
+          description: Producto no encontrado
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por MongoDB
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Cantidad de producto
+        code:
+          type: string
+          description: Número de serie del producto
+        category:
+          type: string
+          description: Gama a la que pertenece el producto
+        status:
+          type: boolean
+          description: Disponibilidad del producto
+      example:
+            id: 664bf735ae501e26c4d4c728
+            title: Car
+            description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+            stock: 97
+            category: Clothing
+            status: true
+            code: 978-1-118-10426-2
+            price: 833
+            thumbnail: []
+            __v: 0

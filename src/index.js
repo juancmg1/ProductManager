@@ -20,11 +20,26 @@ import initializePassport from './config/passport/strategies/passport.js'
 import varenv from './dotenv.js'
 import mockingRouter from './routes/mockingRouter.js'
 import { addLogger } from './utils/logger.js'
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUIExpress from 'swagger-ui-express'
 
 
 const app = express()
 const PORT = 8082
 dotenv.config()
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.1.0',
+        info: {
+            title: 'documentacion de api',
+            description: 'Esta api esta configurada para un ecommerce'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
 
 mongoose.connect(varenv.mongo_url)
 .then(() => console.log("DB is connected"))
@@ -123,6 +138,7 @@ app.use('/api/chat', chatRouter, express.static(__dirname + '/public'))
 app.use('/api/users', userRouter)
 app.use('/api/session', sessionRouter)
 app.use('/api/mockingproducts', mockingRouter)
+app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 app.post('/upload', upload.single('product'), (req, res) => {
     try {
         console.log(req.file)
