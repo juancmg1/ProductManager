@@ -10,3 +10,22 @@ export const getUsers = async (req, res) => {
     }
 
 }
+
+export const sendDocuments = async (req,res) => {
+    try {
+        const {uid} = req.params
+        const newDocs = req.body
+        const user = await userModel.findByIdAndUpdate(uid, {$push: {documents: {$each:{
+            newDocs
+        }} }})
+        if (!user) {
+            res.status(404).send("User no existe")
+            
+        }else{
+
+        }
+    } catch (e) {
+        res.status(500).send(e)
+    }
+}
+

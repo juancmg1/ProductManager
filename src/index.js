@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cartRouter from './routes/cartRouter.js'
 import productsRouter from './routes/productsRouter.js'
-import upload from './config/multer.js'
+
 import { __dirname } from './path.js'
 import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
@@ -139,15 +139,6 @@ app.use('/api/users', userRouter)
 app.use('/api/session', sessionRouter)
 app.use('/api/mockingproducts', mockingRouter)
 app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
-app.post('/upload', upload.single('product'), (req, res) => {
-    try {
-        console.log(req.file)
-        res.status(200).send("Imagen cargada correctamente")
-    } catch (e) {
-        req.logger.error(`Metodo: ${req.method} en ruta ${req.url} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
-        res.status(500).send("Error al cargar imagen")
-    }
-})
 
 
 const resultado = await productModel.paginate({ status: true }, { limit: 10, page: 1, sort: ({ price: 'desc' }) })
